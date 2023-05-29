@@ -1,14 +1,17 @@
 import React from "react";
 import { Pressable, Text, View, StyleSheet, Platform } from "react-native";
+import { CustomStackNavigationProp } from "../types/navigation";
 
 const CategoryGridTile = ({
   title,
   color,
   onPress,
+  navigation,
 }: {
   title: string;
   color: string;
   onPress: () => void;
+  navigation: CustomStackNavigationProp<"MealsCategories">;
 }) => {
   return (
     <View style={styles.gridItem}>

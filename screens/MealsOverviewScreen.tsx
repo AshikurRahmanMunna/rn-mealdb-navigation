@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import { CustomStackRouteProp } from "../types/navigation";
-import { MEALS } from "../data/dummy-data";
+import {
+  CustomStackNavigationProp,
+  CustomStackRouteProp,
+} from "../types/navigation";
+import { CATEGORIES, MEALS } from "../data/dummy-data";
 import Meal from "../models/meal";
 import MealItem from "../components/MealItem";
-interface IRoute {
+interface IMealsOverviewScreen {
   route: CustomStackRouteProp<"MealsOverview">;
+  navigation: CustomStackNavigationProp<"MealsOverview">;
 }
-const MealsOverviewScreen = ({ route }: IRoute) => {
+const MealsOverviewScreen = ({ route, navigation }: IMealsOverviewScreen) => {
   const { categoryId } = route.params;
+  useLayoutEffect(() => {
+    const category = CATEGORIES.find((category) => category.id === categoryId);
+    navigation.setOptions({ title: category?.title });
+  }, [categoryId, navigation]);
   const displayedMeals = MEALS.filter(
     (meal) => meal.categoryIds.indexOf(categoryId) >= 0
   );

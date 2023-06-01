@@ -5,12 +5,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import { RootStackParamList } from "./types/navigation";
-import { CATEGORIES } from "./data/dummy-data";
+import MealDetailScreen from "./screens/MealDetailScreen";
 export default function App() {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
@@ -30,14 +30,15 @@ export default function App() {
           <Stack.Screen
             name="MealsOverview"
             component={MealsOverviewScreen}
-            options={({ navigation, route }) => {
-              const { categoryId } = route.params;
-              const category = CATEGORIES.find((c) => c.id === categoryId);
-              return {
-                title: category?.title,
-              };
-            }}
+            // options={({ navigation, route }) => {
+            //   const { categoryId } = route.params;
+            //   const category = CATEGORIES.find((c) => c.id === categoryId);
+            //   return {
+            //     title: category?.title,
+            //   };
+            // }}
           />
+          <Stack.Screen name="MealDetail" component={MealDetailScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

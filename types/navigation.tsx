@@ -5,6 +5,9 @@ export type RootStackParamList = {
   MealsOverview: {
     categoryId: string;
   };
+  MealDetail: {
+    mealId: string;
+  };
 };
 
 // use this to get both the navigation and route

@@ -8,15 +8,20 @@ import {
   Platform,
 } from "react-native";
 import Meal from "../models/meal";
+import { useNavigation } from "@react-navigation/native";
+import { CustomStackNavigationProp } from "../types/navigation";
 
 interface IMealItem {
   meal: Meal;
 }
 
 const MealItem = ({ meal }: IMealItem) => {
+  const navigation =
+    useNavigation<CustomStackNavigationProp<"MealsOverview">>();
   return (
     <View style={styles.mealItem}>
       <Pressable
+        onPress={() => navigation.navigate("MealDetail", { mealId: meal.id })}
         android_ripple={{ color: "#ccc" }}
         style={({ pressed }) =>
           pressed && Platform.OS === "ios" ? styles.buttonPressed : null

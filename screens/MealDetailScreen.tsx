@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from "react";
-import { View, Image, Text, StyleSheet } from "react-native";
+import { View, Image, Text, StyleSheet, ScrollView } from "react-native";
 import {
   CustomStackNavigationProp,
   CustomStackRouteProp,
@@ -19,7 +19,7 @@ const MealDetailScreen = ({ navigation, route }: IMealDetailScreen) => {
     navigation.setOptions({ title: meal?.title });
   }, [meal]);
   return (
-    <View>
+    <ScrollView style={styles.rootContainer}>
       <Image style={styles.image} source={{ uri: meal?.imageUrl }} />
       <Text style={styles.title}>{meal?.title}</Text>
       {meal && (
@@ -30,17 +30,24 @@ const MealDetailScreen = ({ navigation, route }: IMealDetailScreen) => {
           textStyle={styles.detailText}
         />
       )}
-      <Subtitle>Ingredients</Subtitle>
-      {meal?.ingredients && <List data={meal?.ingredients} />}
-      <Subtitle>Steps</Subtitle>
-      {meal?.steps && <List data={meal?.steps} />}
-    </View>
+      <View style={styles.listOuterContainer}>
+        <View style={styles.listContainer}>
+          <Subtitle>Ingredients</Subtitle>
+          {meal?.ingredients && <List data={meal?.ingredients} />}
+          <Subtitle>Steps</Subtitle>
+          {meal?.steps && <List data={meal?.steps} />}
+        </View>
+      </View>
+    </ScrollView>
   );
 };
 
 export default MealDetailScreen;
 
 const styles = StyleSheet.create({
+  rootContainer: {
+    marginBottom: 32,
+  },
   image: {
     width: "100%",
     height: 350,
@@ -54,5 +61,11 @@ const styles = StyleSheet.create({
   },
   detailText: {
     color: "white",
+  },
+  listContainer: {
+    width: "80%",
+  },
+  listOuterContainer: {
+    alignItems: "center",
   },
 });

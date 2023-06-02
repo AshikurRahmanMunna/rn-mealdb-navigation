@@ -6,6 +6,8 @@ import {
 } from "../types/navigation";
 import { MEALS } from "../data/dummy-data";
 import MealDetails from "../components/MealDetails";
+import Subtitle from "../components/MealDetail/Subtitle";
+import List from "../components/MealDetail/List";
 interface IMealDetailScreen {
   route: CustomStackRouteProp<"MealDetail">;
   navigation: CustomStackNavigationProp<"MealDetail">;
@@ -18,23 +20,20 @@ const MealDetailScreen = ({ navigation, route }: IMealDetailScreen) => {
   }, [meal]);
   return (
     <View>
-      <Image source={{ uri: meal?.imageUrl }} />
-      <Text>{meal?.title}</Text>
+      <Image style={styles.image} source={{ uri: meal?.imageUrl }} />
+      <Text style={styles.title}>{meal?.title}</Text>
       {meal && (
         <MealDetails
           affordablity={meal?.affordablity}
           complexity={meal?.complexity}
           duration={meal?.duration}
+          textStyle={styles.detailText}
         />
       )}
-      <Text>Ingredients</Text>
-      {meal?.ingredients.map((ingredient, i) => (
-        <Text key={i}>{ingredient}</Text>
-      ))}
-      <Text>Steps</Text>
-      {meal?.steps.map((step, i) => (
-        <Text key={i}>{step}</Text>
-      ))}
+      <Subtitle>Ingredients</Subtitle>
+      {meal?.ingredients && <List data={meal?.ingredients} />}
+      <Subtitle>Steps</Subtitle>
+      {meal?.steps && <List data={meal?.steps} />}
     </View>
   );
 };
@@ -45,5 +44,15 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: 350,
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 24,
+    margin: 8,
+    textAlign: "center",
+    color: "white",
+  },
+  detailText: {
+    color: "white",
   },
 });

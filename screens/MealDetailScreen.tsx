@@ -8,6 +8,7 @@ import { MEALS } from "../data/dummy-data";
 import MealDetails from "../components/MealDetails";
 import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
+import IconButton from "../components/IconButton";
 interface IMealDetailScreen {
   route: CustomStackRouteProp<"MealDetail">;
   navigation: CustomStackNavigationProp<"MealDetail">;
@@ -15,9 +16,23 @@ interface IMealDetailScreen {
 const MealDetailScreen = ({ navigation, route }: IMealDetailScreen) => {
   const { mealId } = route.params;
   const meal = MEALS.find((m) => m.id === mealId);
+  const headerButtonPressed = () => {
+    console.log("pressed!");
+  };
   useLayoutEffect(() => {
-    navigation.setOptions({ title: meal?.title });
-  }, [meal]);
+    navigation.setOptions({
+      title: meal?.title,
+      headerRight: () => {
+        return (
+          <IconButton
+            color="white"
+            icon={"star"}
+            onPress={headerButtonPressed}
+          />
+        );
+      },
+    });
+  }, [meal, navigation, headerButtonPressed]);
   return (
     <ScrollView style={styles.rootContainer}>
       <Image style={styles.image} source={{ uri: meal?.imageUrl }} />

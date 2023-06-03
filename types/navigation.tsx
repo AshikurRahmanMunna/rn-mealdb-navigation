@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-// root params list
+
 export type RootStackParamList = {
   MealsCategories: undefined;
   MealsOverview: {

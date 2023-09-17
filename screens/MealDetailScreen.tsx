@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useContext } from "react";
 import { View, Image, Text, StyleSheet, ScrollView } from "react-native";
 import {
   CustomStackNavigationProp,
@@ -9,6 +9,7 @@ import MealDetails from "../components/MealDetails";
 import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
 import IconButton from "../components/IconButton";
+import { FavoritesContext } from "../store/context/favorites-context";
 interface IMealDetailScreen {
   route: CustomStackRouteProp<"MealDetail">;
   navigation: CustomStackNavigationProp<"MealDetail">;
@@ -16,8 +17,19 @@ interface IMealDetailScreen {
 const MealDetailScreen = ({ navigation, route }: IMealDetailScreen) => {
   const { mealId } = route.params;
   const meal = MEALS.find((m) => m.id === mealId);
+  const {
+    ids: favoriteIds,
+    addFavorite,
+    removeFavorite,
+  } = useContext(FavoritesContext);
+  const isInFavorite = favoriteIds.includes(mealId);
+  console.log(favoriteIds, isInFavorite);
   const headerButtonPressed = () => {
-    console.log("pressed!");
+    if (isInFavorite) {
+      removeFavorite(mealId);
+    } else {
+      addFavorite(mealId);
+    }
   };
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -26,7 +38,7 @@ const MealDetailScreen = ({ navigation, route }: IMealDetailScreen) => {
         return (
           <IconButton
             color="white"
-            icon={"star"}
+            icon={isInFavorite ? "star" : "star-outline"}
             onPress={headerButtonPressed}
           />
         );

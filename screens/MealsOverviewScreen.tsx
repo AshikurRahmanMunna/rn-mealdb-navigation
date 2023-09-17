@@ -6,7 +6,8 @@ import {
 } from "../types/navigation";
 import { CATEGORIES, MEALS } from "../data/dummy-data";
 import Meal from "../models/meal";
-import MealItem from "../components/MealItem";
+import MealItem from "../components/MealsList/MealItem";
+import MealsList from "../components/MealsList/MealsList";
 interface IMealsOverviewScreen {
   route: CustomStackRouteProp<"MealsOverview">;
   navigation: CustomStackNavigationProp<"MealsOverview">;
@@ -20,16 +21,9 @@ const MealsOverviewScreen = ({ route, navigation }: IMealsOverviewScreen) => {
   const displayedMeals = MEALS.filter(
     (meal) => meal.categoryIds.indexOf(categoryId) >= 0
   );
-  const renderMealItem = ({ item }: { item: Meal }) => {
-    return <MealItem meal={item} />;
-  };
   return (
     <View style={styles.container}>
-      <FlatList
-        data={displayedMeals}
-        renderItem={renderMealItem}
-        keyExtractor={(item) => item.id}
-      />
+      <MealsList meals={displayedMeals} />
     </View>
   );
 };

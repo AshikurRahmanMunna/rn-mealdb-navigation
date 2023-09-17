@@ -7,9 +7,9 @@ import {
   StyleSheet,
   Platform,
 } from "react-native";
-import Meal from "../models/meal";
+import Meal from "../../models/meal";
 import { useNavigation } from "@react-navigation/native";
-import { CustomStackNavigationProp } from "../types/navigation";
+import { CustomStackNavigationProp } from "../../types/navigation";
 
 interface IMealItem {
   meal: Meal;

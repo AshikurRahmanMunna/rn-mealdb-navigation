@@ -10,6 +10,12 @@ import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
 import IconButton from "../components/IconButton";
 import { FavoritesContext } from "../store/context/favorites-context";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../app/store";
+import {
+  addFavorite,
+  removeFavorite,
+} from "../features/favorites/favoritesSlice";
 interface IMealDetailScreen {
   route: CustomStackRouteProp<"MealDetail">;
   navigation: CustomStackNavigationProp<"MealDetail">;
@@ -17,18 +23,16 @@ interface IMealDetailScreen {
 const MealDetailScreen = ({ navigation, route }: IMealDetailScreen) => {
   const { mealId } = route.params;
   const meal = MEALS.find((m) => m.id === mealId);
-  const {
-    ids: favoriteIds,
-    addFavorite,
-    removeFavorite,
-  } = useContext(FavoritesContext);
+  const { ids: favoriteIds } = useSelector(
+    (state: RootState) => state.favorites
+  );
+  const dispatch = useDispatch();
   const isInFavorite = favoriteIds.includes(mealId);
-  console.log(favoriteIds, isInFavorite);
   const headerButtonPressed = () => {
     if (isInFavorite) {
-      removeFavorite(mealId);
+      dispatch(removeFavorite({ id: mealId }));
     } else {
-      addFavorite(mealId);
+      dispatch(addFavorite({ id: mealId }));
     }
   };
   useLayoutEffect(() => {
